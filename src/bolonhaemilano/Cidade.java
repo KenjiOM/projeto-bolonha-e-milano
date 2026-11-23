@@ -1,172 +1,62 @@
 package bolonhaemilano;
 
-/**
- * Representa a cidade governada pelo jogador e seus recursos econômicos.
- */
+/** Estado econômico e administrativo de uma cidade. */
 public class Cidade {
     private final String nome;
     private int anoAtual;
     private final Jogador dono;
-    private int florins;
-    private int terras;
-    private int graos;
-    private int servos;
-    private int taxaImposto;
+    private int florins, terras, graos, servos, taxaImposto, soldados, construcoes;
     private String nivelJustica;
-    private int soldados;
-    private int construcoes;
+    private boolean colheitaFeita, impostosArrecadados;
 
     public Cidade(String nome, Jogador dono) {
-        this.nome = nome;
+        this.nome = nome == null || nome.trim().isEmpty() ? "Cidade" : nome.trim();
         this.dono = dono;
-        this.anoAtual = 1400;
-        this.florins = 1000;
-        this.terras = 10000;
-        this.graos = 500;
-        this.servos = 200;
-        this.taxaImposto = 10;
-        this.nivelJustica = "Moderada";
-        this.soldados = 0;
-        this.construcoes = 0;
+        anoAtual = 1400; florins = 1000; terras = 10000; graos = 500; servos = 200;
+        taxaImposto = 10; nivelJustica = "Moderada"; soldados = 0; construcoes = 0;
+        colheitaFeita = false; impostosArrecadados = false;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public int getAnoAtual() {
-        return anoAtual;
-    }
-
-    public Jogador getDono() {
-        return dono;
-    }
-
-    public int getFlorins() {
-        return florins;
-    }
-
-    public int getTerras() {
-        return terras;
-    }
-
-    public int getGraos() {
-        return graos;
-    }
-
-    public int getServos() {
-        return servos;
-    }
-
+    public String getNome() { return nome; }
+    public int getAnoAtual() { return anoAtual; }
+    public Jogador getDono() { return dono; }
+    public int getFlorins() { return florins; }
+    public int getTerras() { return terras; }
+    public int getGraos() { return graos; }
+    public int getServos() { return servos; }
     public int getTaxaImposto() { return taxaImposto; }
-
-    public void setTaxaImposto(int taxaImposto) { this.taxaImposto = taxaImposto; }
-
+    public void setTaxaImposto(int v) { taxaImposto = v; }
     public String getNivelJustica() { return nivelJustica; }
-
-    public void setNivelJustica(String nivelJustica) { this.nivelJustica = nivelJustica; }
-
+    public void setNivelJustica(String v) { nivelJustica = v; }
     public int getSoldados() { return soldados; }
-
     public int getConstrucoes() { return construcoes; }
+    public boolean isColheitaFeita() { return colheitaFeita; }
+    public void marcarColheitaFeita() { colheitaFeita = true; }
+    public boolean isImpostosArrecadados() { return impostosArrecadados; }
+    public void marcarImpostosArrecadados() { impostosArrecadados = true; }
+    public void avancarAno() { anoAtual++; colheitaFeita = false; impostosArrecadados = false; }
 
-    public void avancarAno() {
-        anoAtual++;
-    }
-
-    public void adicionarFlorins(int quantidade) {
-        if (quantidade > 0 && florins <= Integer.MAX_VALUE - quantidade) {
-            florins += quantidade;
-        }
-    }
-
-    public boolean removerFlorins(int quantidade) {
-        if (quantidade <= 0 || quantidade > florins) {
-            return false;
-        }
-        florins -= quantidade;
-        return true;
-    }
-
-    public void adicionarTerras(int quantidade) {
-        if (quantidade > 0 && terras <= Integer.MAX_VALUE - quantidade) {
-            terras += quantidade;
-        }
-    }
-
-    public boolean removerTerras(int quantidade) {
-        if (quantidade <= 0 || quantidade > terras) {
-            return false;
-        }
-        terras -= quantidade;
-        return true;
-    }
-
-    public void adicionarGraos(int quantidade) {
-        if (quantidade > 0 && graos <= Integer.MAX_VALUE - quantidade) {
-            graos += quantidade;
-        }
-    }
-
-    public boolean removerGraos(int quantidade) {
-        if (quantidade <= 0 || quantidade > graos) {
-            return false;
-        }
-        graos -= quantidade;
-        return true;
-    }
-
-    public void adicionarServos(int quantidade) {
-        if (quantidade > 0 && servos <= Integer.MAX_VALUE - quantidade) {
-            servos += quantidade;
-        }
-    }
-
-    public boolean removerServos(int quantidade) {
-        if (quantidade <= 0 || quantidade > servos) {
-            return false;
-        }
-        servos -= quantidade;
-        return true;
-    }
-
-    public void adicionarSoldados(int quantidade) {
-        if (quantidade > 0 && soldados <= Integer.MAX_VALUE - quantidade) {
-            soldados += quantidade;
-        }
-    }
-
-    public boolean removerSoldados(int quantidade) {
-        if (quantidade <= 0 || quantidade > soldados) return false;
-        soldados -= quantidade;
-        return true;
-    }
-
-    public void adicionarConstrucoes(int quantidade) {
-        if (quantidade > 0 && construcoes <= Integer.MAX_VALUE - quantidade) {
-            construcoes += quantidade;
-        }
-    }
-
-    public boolean removerConstrucoes(int quantidade) {
-        if (quantidade <= 0 || quantidade > construcoes) return false;
-        construcoes -= quantidade;
-        return true;
-    }
+    public void adicionarFlorins(int q) { if (q > 0 && (long) florins + q <= Integer.MAX_VALUE) florins += q; }
+    public boolean removerFlorins(int q) { if (q <= 0 || q > florins) return false; florins -= q; return true; }
+    public void adicionarTerras(int q) { if (q > 0 && (long) terras + q <= Integer.MAX_VALUE) terras += q; }
+    public boolean removerTerras(int q) { if (q <= 0 || q > terras) return false; terras -= q; return true; }
+    public void adicionarGraos(int q) { if (q > 0 && (long) graos + q <= Integer.MAX_VALUE) graos += q; }
+    public boolean removerGraos(int q) { if (q <= 0 || q > graos) return false; graos -= q; return true; }
+    public void adicionarServos(int q) { if (q > 0 && (long) servos + q <= Integer.MAX_VALUE) servos += q; }
+    public boolean removerServos(int q) { if (q <= 0 || q > servos) return false; servos -= q; return true; }
+    public void adicionarSoldados(int q) { if (q > 0 && (long) soldados + q <= Integer.MAX_VALUE) soldados += q; }
+    public boolean removerSoldados(int q) { if (q <= 0 || q > soldados) return false; soldados -= q; return true; }
+    public void adicionarConstrucoes(int q) { if (q > 0 && (long) construcoes + q <= Integer.MAX_VALUE) construcoes += q; }
+    public boolean removerConstrucoes(int q) { if (q <= 0 || q > construcoes) return false; construcoes -= q; return true; }
 
     public void exibirStatus() {
         System.out.println("\n========== STATUS DA CIDADE ==========");
         System.out.println("Cidade: " + nome);
-        System.out.println("Governante: " + dono.getTitulo() + " " + dono.getNome());
-        System.out.println("Ano atual: " + anoAtual);
-        System.out.println("Florins: " + florins);
-        System.out.println("Terras: " + terras + " hectares");
-        System.out.println("Grãos: " + graos + " unidades");
-        System.out.println("Servos: " + servos);
-        System.out.println("Taxa de imposto: " + taxaImposto + "%");
-        System.out.println("Nivel de justica: " + nivelJustica);
-        System.out.println("Soldados: " + soldados);
-        System.out.println("Construcoes: " + construcoes);
+        System.out.println("Governante: " + (dono == null ? "Sem governante" : dono.getTitulo() + " " + dono.getNome()));
+        System.out.println("Ano atual: " + anoAtual + " | Colheita: " + (colheitaFeita ? "realizada" : "pendente")
+                + " | Impostos: " + (impostosArrecadados ? "arrecadados" : "pendentes"));
+        System.out.println("Florins: " + florins + " | Terras: " + terras + " hectares | Grãos: " + graos);
+        System.out.println("Servos: " + servos + " | Imposto: " + taxaImposto + "% | Justiça: " + nivelJustica);
+        System.out.println("Soldados: " + soldados + " | Construções: " + construcoes);
         System.out.println("======================================\n");
     }
 }
