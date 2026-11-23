@@ -10,6 +10,8 @@ public class Menu {
 
     private final Scanner scanner;
     private boolean emExecucao;
+    private Jogador jogador;
+    private Cidade cidade;
 
     public Menu() {
         this.scanner = new Scanner(System.in);
@@ -38,7 +40,8 @@ public class Menu {
         System.out.println("  Um jogo de estrategia economica medieval");
         System.out.println("==========================================");
         System.out.println("1 - Novo jogo");
-        System.out.println("2 - Sobre o jogo");
+        System.out.println("2 - Ver status da cidade");
+        System.out.println("3 - Sobre o jogo");
         System.out.println("0 - Sair");
         System.out.print("Escolha uma opcao: ");
     }
@@ -63,9 +66,12 @@ public class Menu {
     private void processarOpcao(int opcao) {
         switch (opcao) {
             case 1:
-                System.out.println("\nNovo jogo: funcionalidade disponível na Etapa 2.\n");
+                iniciarNovoJogo();
                 break;
             case 2:
+                exibirStatus();
+                break;
+            case 3:
                 exibirSobre();
                 break;
             case 0:
@@ -76,6 +82,33 @@ public class Menu {
                 System.out.println("\nOpcao invalida. Digite 1, 2 ou 0.\n");
                 break;
         }
+    }
+    private void iniciarNovoJogo() {
+        System.out.print("Digite o nome do jogador: ");
+        String nomeJogador = scanner.nextLine().trim();
+        while (nomeJogador.isEmpty()) {
+            System.out.print("O nome nao pode ficar vazio. Digite o nome do jogador: ");
+            nomeJogador = scanner.nextLine().trim();
+        }
+
+        System.out.print("Digite o nome da cidade: ");
+        String nomeCidade = scanner.nextLine().trim();
+        while (nomeCidade.isEmpty()) {
+            System.out.print("O nome nao pode ficar vazio. Digite o nome da cidade: ");
+            nomeCidade = scanner.nextLine().trim();
+        }
+
+        jogador = new Jogador(nomeJogador);
+        cidade = new Cidade(nomeCidade, jogador);
+        System.out.println("\nNovo jogo iniciado com sucesso!");
+        cidade.exibirStatus();
+    }
+    private void exibirStatus() {
+        if (cidade == null) {
+            System.out.println("\nNenhum jogo foi iniciado. Escolha 'Novo jogo' primeiro.\n");
+            return;
+        }
+        cidade.exibirStatus();
     }
 
     /**
