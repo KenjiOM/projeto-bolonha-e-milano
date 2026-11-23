@@ -10,6 +10,7 @@ public class Cidade {
     private int florins;
     private int terras;
     private int graos;
+    private int servos;
 
     public Cidade(String nome, Jogador dono) {
         this.nome = nome;
@@ -18,6 +19,7 @@ public class Cidade {
         this.florins = 1000;
         this.terras = 10000;
         this.graos = 500;
+        this.servos = 200;
     }
 
     public String getNome() {
@@ -42,6 +44,10 @@ public class Cidade {
 
     public int getGraos() {
         return graos;
+    }
+
+    public int getServos() {
+        return servos;
     }
 
     public void avancarAno() {
@@ -90,6 +96,20 @@ public class Cidade {
         return true;
     }
 
+    public void adicionarServos(int quantidade) {
+        if (quantidade > 0 && servos <= Integer.MAX_VALUE - quantidade) {
+            servos += quantidade;
+        }
+    }
+
+    public boolean removerServos(int quantidade) {
+        if (quantidade <= 0 || quantidade > servos) {
+            return false;
+        }
+        servos -= quantidade;
+        return true;
+    }
+
     public void exibirStatus() {
         System.out.println("\n========== STATUS DA CIDADE ==========");
         System.out.println("Cidade: " + nome);
@@ -98,6 +118,7 @@ public class Cidade {
         System.out.println("Florins: " + florins);
         System.out.println("Terras: " + terras + " hectares");
         System.out.println("Grãos: " + graos + " unidades");
+        System.out.println("Servos: " + servos);
         System.out.println("======================================\n");
     }
 }
