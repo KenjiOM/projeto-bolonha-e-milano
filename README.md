@@ -1,55 +1,177 @@
-# Bolonha e Milano — Etapas 1 a 8
+# Bolonha e Milano
 
-Jogo textual de estratégia econômica medieval, desenvolvido em Java 17 para 1 a 4 jogadores. Cada jogador administra uma cidade e disputa prestígio até alguém alcançar o título de Rei/Rainha ou o ano final ser ultrapassado.
+**Bolonha e Milano** é um jogo textual de estratégia econômica ambientado na Europa medieval. Desenvolvido em **Java 17**, o jogo permite que de 1 a 4 jogadores administrem suas próprias cidades, cuidem da economia e da população, fortaleçam o governo e disputem prestígio para alcançar os títulos mais altos da nobreza.
 
-## Estrutura
+A partida começa no ano de **1400**. A cada rodada, os jogadores realizam suas ações e, quando todos encerram seus turnos, o ano avança. A disputa termina quando um governante alcança o título de Rei ou Rainha, ou quando o calendário ultrapassa o ano de 1410.
 
-- `../../Downloads/bolonha-e-milano-etapas-1-a-8 (1)/bolonha_etapa8_build/src/bolonhaemilano`: código-fonte Java.
-- `uml/classes-etapas-1-a-8.puml`: diagrama de classes cumulativo.
-- `uml/sequencia-fim-do-ano.puml`: sequência de encerramento do ano.
-- `casos-de-uso/casos-de-uso-etapas-1-a-8.puml`: casos de uso finais.
+## Requisitos
 
-## Compilar e executar
+- Java Development Kit (JDK) 17 ou superior.
+- Terminal ou prompt de comando para compilar e executar o jogo.
 
-Requer Java 17 ou superior. Na raiz do projeto:
+Não são necessárias bibliotecas externas.
+
+## Organização do projeto
+
+```text
+projeto-bolonha-e-milano-etapa-8/
+├── src/
+│   └── bolonhaemilano/
+│       ├── Main.java
+│       ├── Menu.java
+│       ├── Jogador.java
+│       ├── Cidade.java
+│       ├── Partida.java
+│       ├── Mercado.java
+│       ├── Agricultura.java
+│       ├── Governo.java
+│       ├── Construcoes.java
+│       ├── Nobreza.java
+│       └── Testes.java
+├── uml/
+│   ├── classes-etapas-1-a-8.puml
+│   └── sequencia-fim-do-ano.puml
+├── casos-de-uso/
+│   └── casos-de-uso-etapas-1-a-8.puml
+└── README.md
+```
+
+O código está organizado no pacote `bolonhaemilano`. Os arquivos `.puml` contêm os diagramas do projeto e podem ser visualizados em ferramentas compatíveis com PlantUML.
+
+## Como compilar e executar
+
+Abra o terminal na pasta principal do projeto e execute:
 
 ```bash
 javac -encoding UTF-8 -d bin src/bolonhaemilano/*.java
+```
+
+Depois, inicie o jogo com:
+
+```bash
 java -cp bin bolonhaemilano.Main
 ```
 
+A pasta `bin` será utilizada para armazenar os arquivos compilados (`.class`).
+
 ## Como jogar
 
-1. **Novo jogo**: escolha de 1 a 4 jogadores e informe o nome de cada governante e cidade.
-2. **Ver status**: consulta recursos, governo, defesa e ações anuais da cidade da vez.
-3. **Mercado**: compra e venda de grãos e terras.
-4. **Agricultura**: colheita (uma vez por ano) e distribuição de alimentos (20% a 80%).
-5. **Governo**: arrecadação de impostos (uma vez por ano), taxa de 0% a 50% e nível de justiça.
-6. **Construções**: recruta soldados (5 florins e 1 servo por soldado) e constrói (20 florins por construção).
-7. **Encerrar turno**: passa a vez; quando o último jogador encerra, todas as cidades avançam um ano, os governantes podem ser promovidos e a partida é verificada.
-8. **Classificação**: mostra governante, título, prestígio e distância para o próximo título.
-9. **Sobre**: informações do jogo.
-0. **Sair**.
+Ao iniciar, selecione **Novo jogo**. Informe a quantidade de participantes (de 1 a 4), o nome de cada jogador e o nome de sua cidade. Cada participante começa com uma cidade e recursos iniciais próprios.
 
-## Regras de rodada e vitória
+O menu principal apresenta as seguintes opções:
 
-- O jogo começa em 1400; cada cidade joga uma vez por ano.
-- A colheita e a arrecadação de impostos só podem ocorrer uma vez por cidade em cada ano. `Cidade.avancarAno()` libera ambas novamente.
-- Prestígio = construções × 10 + soldados × 2 + servos + terras ÷ 100. Florins não contam.
-- Limiares: Cavaleiro (início), Barão (400), Conde (550), Marquês (700), Duque (850), Rei/Rainha (1000). No máximo uma promoção por fechamento de ano.
-- A partida termina quando alguém vira Rei/Rainha ou quando o ano passa de 1410. O vencedor é quem tem o título mais alto; em empate, vence quem tem maior prestígio.
+| Opção | Funcionalidade | Descrição |
+|---|---|---|
+| 1 | Novo jogo | Inicia uma partida e cadastra os jogadores e suas cidades. |
+| 2 | Ver status da cidade | Exibe os recursos, a população, o governo, os soldados, as construções e as ações anuais da cidade atual. |
+| 3 | Mercado | Permite comprar e vender grãos e terras. |
+| 4 | Agricultura | Permite realizar a colheita e distribuir alimentos à população. |
+| 5 | Governo | Permite arrecadar impostos, definir a taxa tributária e escolher o nível de justiça. |
+| 6 | Construções | Permite recrutar soldados e construir estruturas. |
+| 7 | Encerrar turno | Finaliza o turno do jogador atual e passa a vez ao próximo. |
+| 8 | Ver classificação | Exibe os títulos e o prestígio de todos os participantes. |
+| 9 | Sobre o jogo | Apresenta uma breve descrição do jogo. |
+| 0 | Sair | Encerra a execução do jogo. |
 
-## Rodar os testes automatizados
+As opções que dependem de uma partida ativa só podem ser utilizadas depois de iniciar um novo jogo.
 
-A classe `Testes` é independente do jogo e não usa JUnit nem bibliotecas externas:
+## Recursos iniciais
+
+Cada cidade começa no ano de 1400 com os seguintes recursos e configurações:
+
+| Recurso ou atributo | Valor inicial |
+|---|---:|
+| Florins | 1.000 |
+| Terras | 10.000 hectares |
+| Grãos | 500 |
+| Servos | 200 |
+| Taxa de imposto | 10% |
+| Nível de justiça | Moderada |
+| Soldados | 0 |
+| Construções | 0 |
+| Título do governante | Cavaleiro |
+
+## Sistemas do jogo
+
+### Mercado
+
+O mercado permite negociar dois recursos:
+
+- **Grãos:** 2 florins por unidade.
+- **Terras:** 5 florins por hectare.
+
+É possível comprar ou vender cada recurso. As operações dependem de quantidade válida e de saldo ou estoque suficiente.
+
+### Agricultura e população
+
+A agricultura possui duas ações principais:
+
+- **Colheita:** a área que pode ser cultivada depende da quantidade de terras e de servos disponíveis. Cada servo permite cultivar até 5 hectares. O cultivo utiliza sementes equivalentes à metade da área plantada e produz 2 grãos por hectare. Se o estoque de sementes não for suficiente, a área cultivada é reduzida.
+- **Distribuição de alimentos:** o jogador escolhe distribuir entre 20% e 80% dos grãos armazenados. A quantidade recebida pela população influencia seu crescimento ou sua redução. Quando a alimentação atende à necessidade calculada, a população cresce 5%; caso contrário, perde servos de acordo com o déficit.
+
+A colheita só pode ser realizada uma vez por cidade em cada ano. A distribuição de alimentos pode ser feita durante o turno, respeitando o percentual permitido.
+
+### Governo e impostos
+
+O jogador pode configurar a taxa de imposto entre **0% e 50%** e escolher um dos três níveis de justiça:
+
+- **Justa:** multiplicador de arrecadação de 0,8.
+- **Moderada:** multiplicador de arrecadação de 1,0.
+- **Severa:** multiplicador de arrecadação de 1,3.
+
+A arrecadação considera a quantidade de servos, a taxa de imposto e o multiplicador correspondente ao nível de justiça. Os impostos só podem ser arrecadados uma vez por cidade em cada ano.
+
+### Construções e soldados
+
+O jogador pode investir seus florins para ampliar a cidade e sua força militar:
+
+- **Recrutar soldados:** custa 5 florins e 1 servo por soldado.
+- **Construir:** custa 20 florins por construção.
+
+O recrutamento verifica se há florins e servos suficientes antes de efetuar a operação.
+
+## Turnos, prestígio e vitória
+
+Cada jogador realiza seu turno na ordem em que foi cadastrado. Ao escolher **Encerrar turno**, a vez passa ao próximo participante. Quando o último jogador encerra seu turno, o ano termina: todas as cidades avançam um ano, os indicadores de colheita e impostos são liberados para o novo período e os governantes podem receber promoções.
+
+O prestígio de cada cidade é calculado pela seguinte fórmula:
+
+```text
+Prestígio = (construções × 10) + (soldados × 2) + servos + (terras ÷ 100)
+```
+
+Os títulos e seus requisitos de prestígio são:
+
+| Título | Prestígio necessário |
+|---|---:|
+| Cavaleiro | Título inicial |
+| Barão | 400 |
+| Conde | 550 |
+| Marquês | 700 |
+| Duque | 850 |
+| Rei/Rainha | 1.000 |
+
+As promoções são verificadas no encerramento de cada ano, e cada governante pode subir no máximo um título por encerramento anual.
+
+A partida termina quando um jogador alcança o título de **Rei/Rainha** ou quando o ano passa de **1410**. O vencedor é definido pelo título mais alto. Se houver empate no título, vence o participante com maior prestígio.
+
+## Testes automatizados
+
+O projeto inclui a classe `Testes`, que verifica o funcionamento das principais regras e operações, incluindo situações válidas e casos de erro. Os testes não dependem de JUnit nem de bibliotecas externas.
+
+Para compilar o projeto e executar os testes, utilize:
 
 ```bash
 javac -encoding UTF-8 -d bin src/bolonhaemilano/*.java
 java -cp bin bolonhaemilano.Testes
 ```
 
-A suíte contém 37 verificações cobrindo caminhos válidos e casos de erro. O resultado esperado é `Aprovados: 37 | Reprovados: 0`. Se houver reprovação, o processo termina com código de saída 1.
+A execução informa a quantidade de testes aprovados e reprovados. O resultado esperado para a versão atual é:
 
-## Git
+```text
+Aprovados: 37 | Reprovados: 0
+```
 
-Para registrar o marco final em um repositório Git já existente, use a mensagem `Etapa 8: integração, testes e entrega final` e crie a tag `etapa-8`. Os commits históricos das Etapas 1 a 7 precisam existir no repositório original; eles não podem ser reconstruídos fielmente a partir apenas do código final.
+## Desenvolvimento
+
+O projeto foi construído em etapas, evoluindo da estrutura inicial do jogo até a integração dos sistemas de economia, agricultura, governo, construções, múltiplos jogadores, classificação, vitória e testes automatizados.
