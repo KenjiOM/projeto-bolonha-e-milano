@@ -8,11 +8,12 @@ public class Governo {
     private static final double MULTIPLICADOR_SEVERA = 1.3;
 
     public int arrecadarImpostos(Cidade cidade) {
-        if (cidade == null) return 0;
+        if (cidade == null || cidade.isImpostosArrecadados()) return -1;
         int base = (int) ((long) cidade.getServos() * cidade.getTaxaImposto() / 100);
         double multiplicador = multiplicadorPara(cidade.getNivelJustica());
         int arrecadado = (int) (base * multiplicador);
         cidade.adicionarFlorins(arrecadado);
+        cidade.marcarImpostosArrecadados();
         return arrecadado;
     }
 

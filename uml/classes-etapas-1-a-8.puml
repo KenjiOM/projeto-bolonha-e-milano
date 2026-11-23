@@ -1,0 +1,99 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Main { +main(args: String[]): void }
+class Menu {
+ -scanner: Scanner
+ -emExecucao: boolean
+ -partida: Partida
+ -cidade: Cidade
+ -mercado: Mercado
+ -agricultura: Agricultura
+ -governo: Governo
+ -construcoes: Construcoes
+ -nobreza: Nobreza
+ +executar(): void
+ -lerInteiro(): int
+ -exigirJogoEmAndamento(): boolean
+ -iniciarNovoJogo(): void
+ -encerrarTurno(): void
+ -exibirClassificacao(): void
+ -encerrarPartida(): void
+}
+class Jogador {
+ -TITULOS: String[] {static}
+ -nome: String
+ -nivelTitulo: int
+ +getNome(): String
+ +getTitulo(): String
+ +getNivelTitulo(): int
+ +promover(): boolean
+ +ehMonarca(): boolean
+}
+class Cidade {
+ -nome: String
+ -anoAtual: int
+ -dono: Jogador
+ -florins: int
+ -terras: int
+ -graos: int
+ -servos: int
+ -taxaImposto: int
+ -nivelJustica: String
+ -soldados: int
+ -construcoes: int
+ -colheitaFeita: boolean
+ -impostosArrecadados: boolean
+ +avancarAno(): void
+ +isColheitaFeita(): boolean
+ +marcarColheitaFeita(): void
+ +isImpostosArrecadados(): boolean
+ +marcarImpostosArrecadados(): void
+ +exibirStatus(): void
+}
+class Partida {
+ +MAXIMO_JOGADORES: int = 4 {static}
+ -ANO_FINAL: int = 1410 {static}
+ -cidades: List<Cidade>
+ -indiceAtual: int
+ +adicionarCidade(cidade): boolean
+ +getCidades(): List<Cidade>
+ +getCidadeAtual(): Cidade
+ +passarTurno(): boolean
+ +encerrarAno(nobreza): List<Cidade>
+ +terminou(): boolean
+ +determinarVencedor(nobreza): Cidade
+}
+class Mercado
+class Agricultura { +processarColheita(cidade): int }
+class Governo { +arrecadarImpostos(cidade): int }
+class Construcoes
+class Nobreza {
+ -PESO_CONSTRUCAO: int = 10
+ -PESO_SOLDADO: int = 2
+ -PESO_SERVO: int = 1
+ -HECTARES_POR_PONTO: int = 100
+ -PRESTIGIO_MINIMO: int[]
+ +calcularPrestigio(cidade): int
+ +prestigioParaProximoTitulo(jogador): int
+ +verificarPromocao(cidade): boolean
+}
+class Testes { +main(args: String[]): void {static} }
+Main --> Menu
+Menu --> Partida
+Menu --> Cidade
+Menu ..> Mercado
+Menu ..> Agricultura
+Menu ..> Governo
+Menu ..> Construcoes
+Menu ..> Nobreza
+Partida "1" o-- "1..4" Cidade
+Cidade "1" --> "1" Jogador : dono
+Testes ..> Cidade
+Testes ..> Jogador
+Testes ..> Partida
+Testes ..> Mercado
+Testes ..> Agricultura
+Testes ..> Governo
+Testes ..> Construcoes
+Testes ..> Nobreza
+@enduml
