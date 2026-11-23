@@ -10,6 +10,7 @@ public class Menu {
     private Mercado mercado;
     private Agricultura agricultura;
     private Governo governo;
+    private Construcoes construcoes;
 
     public Menu() {
         scanner = new Scanner(System.in);
@@ -17,6 +18,7 @@ public class Menu {
         mercado = new Mercado();
         agricultura = new Agricultura();
         governo = new Governo();
+        construcoes = new Construcoes();
     }
 
     public void executar() {
@@ -37,7 +39,8 @@ public class Menu {
         System.out.println("3 - Mercado");
         System.out.println("4 - Agricultura");
         System.out.println("5 - Governo");
-        System.out.println("6 - Sobre o jogo");
+        System.out.println("6 - Construcoes");
+        System.out.println("7 - Sobre o jogo");
         System.out.println("0 - Sair");
         System.out.print("Escolha uma opcao: ");
     }
@@ -57,7 +60,8 @@ public class Menu {
             case 3: abrirMercado(); break;
             case 4: abrirAgricultura(); break;
             case 5: abrirGoverno(); break;
-            case 6: exibirSobre(); break;
+            case 6: abrirConstrucoes(); break;
+            case 7: exibirSobre(); break;
             case 0:
                 emExecucao = false;
                 System.out.println("\nSaindo de Bolonha e Milano. Ate a proxima!");
@@ -181,6 +185,7 @@ public class Menu {
         }
     }
 
+
     private void abrirGoverno() {
         if (!verificarJogoIniciado()) return;
         boolean noGoverno = true;
@@ -226,10 +231,48 @@ public class Menu {
         else System.out.println("Nivel invalido. Escolha Justa, Moderada ou Severa.");
     }
 
+    private void abrirConstrucoes() {
+        if (!verificarJogoIniciado()) return;
+        boolean nasConstrucoes = true;
+        while (nasConstrucoes) {
+            System.out.println("\n============= CONSTRUCOES =============");
+            System.out.println("Florins: " + cidade.getFlorins());
+            System.out.println("Servos: " + cidade.getServos());
+            System.out.println("Soldados: " + cidade.getSoldados());
+            System.out.println("Construcoes: " + cidade.getConstrucoes());
+            System.out.println("1 - Recrutar soldados (" + construcoes.getPrecoSoldado() + " florins + 1 servo cada)");
+            System.out.println("2 - Construir (" + construcoes.getPrecoConstrucao() + " florins cada)");
+            System.out.println("0 - Voltar ao menu principal");
+            System.out.print("Escolha uma opcao: ");
+            switch (lerOpcao()) {
+                case 1: recrutarSoldados(); break;
+                case 2: construir(); break;
+                case 0: nasConstrucoes = false; break;
+                default: System.out.println("Opcao invalida. Digite 0, 1 ou 2.");
+            }
+        }
+    }
+
+    private void recrutarSoldados() {
+        System.out.print("Quantidade de soldados para recrutar: ");
+        int quantidade = lerOpcao();
+        if (construcoes.recrutarSoldados(cidade, quantidade))
+            System.out.println("Soldados recrutados com sucesso!");
+        else System.out.println("Nao foi possivel recrutar. Verifique quantidade, florins e servos.");
+    }
+
+    private void construir() {
+        System.out.print("Quantidade de construcoes: ");
+        int quantidade = lerOpcao();
+        if (construcoes.construir(cidade, quantidade))
+            System.out.println("Construcoes realizadas com sucesso!");
+        else System.out.println("Nao foi possivel construir. Verifique quantidade e florins.");
+    }
+
     private void exibirSobre() {
         System.out.println("\n--- SOBRE O JOGO ---");
         System.out.println("Bolonha e Milano e um jogo de estrategia economica medieval.");
         System.out.println("Governe sua cidade, administre recursos, negocie no mercado");
-        System.out.println("e cuide da agricultura e da populacao.\n");
+        System.out.println("cuide da agricultura, arrecade impostos e desenvolva sua defesa e infraestrutura.\n");
     }
 }
