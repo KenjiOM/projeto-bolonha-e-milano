@@ -1,12 +1,12 @@
 # Bolonha e Milano
 
-**Bolonha e Milano** é um jogo textual de estratégia econômica ambientado na Europa medieval. Desenvolvido em **Java 17**, o jogo permite que de 1 a 4 jogadores administrem suas próprias cidades, cuidem da economia e da população, fortaleçam o governo e disputem prestígio para alcançar os títulos mais altos da nobreza.
+**Bolonha e Milano** é um jogo textual de estratégia econômica ambientado na Europa medieval. Desenvolvido em **Java 26**, o jogo permite que de 1 a 4 jogadores administrem suas próprias cidades, cuidem da economia e da população, fortaleçam o governo e disputem prestígio para alcançar os títulos mais altos da nobreza.
 
 A partida começa no ano de **1400**. A cada rodada, os jogadores realizam suas ações e, quando todos encerram seus turnos, o ano avança. A disputa termina quando um governante alcança o título de Rei ou Rainha, ou quando o calendário ultrapassa o ano de 1410.
 
 ## Requisitos
 
-- Java Development Kit (JDK) 17 ou superior.
+- Java Development Kit (JDK) 26 ou superior.
 - Terminal ou prompt de comando para compilar e executar o jogo.
 
 Não são necessárias bibliotecas externas.
